@@ -19,14 +19,21 @@ User: sa
 Password:
 ```
 
-## 2. Realizar Scan de rotas
+## 2. Descobrir rotas ocultas com Fuzz
+Ao realizar a execução de um spider, ele realiza a análise do enpoint origem informado e dos demais presentes no html do domínio. Mas para encontrar rotas ocultas não informadas no url, um bom meio é a prática do Fuzz
+
+### Etapa 1 — Definir varáveis para wordlist
+O processo de Fuzz realiza a combinação de múltiplas possibilidades de endpoint em variáveis pré-definidas.
+
+Para auxiliar nessas combinações, é possível fazer uso de uma wordlist. O fuzz realiza a combinação e realiza requisições para encontrar rotas válidas
+
+As rotas com retorno 200 tiveram sucesso na requisição. As rotas com retorno 400 são existentes, mas não puderam ser processadas pelo servidor. 
+
+## 3. Identificar inconsistências de segurança com Active Scan
 
 
-## 3. Descobrir rotas ocultas com Fuzz
 
-## 4. Identificar inconsistências de segurança com Spider e Spider AJAX
-
-## 5. SQL Injection
+## 4. SQL Injection
 ### Teste 1 — OR 1=1
 URL:
 ```
@@ -35,7 +42,7 @@ http://localhost:8081/insecure/users/find-jdbc?name=' OR '1'='1
 
 ### Teste 2 — UNION SELECT
 ```
-http://localhost:8081/insecure/users/find-jdbc?name=' UNION SELECT id, username, password, email FROM users --
+http://localhost:8081/insecure/users/find-jdbc?name=' UNION SELECT id, name, secret, email FROM users --
 ```
 
 ### Teste 3 — Error Based
